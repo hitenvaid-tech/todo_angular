@@ -1,0 +1,40 @@
+  <h2>New Task</h2>
+  <form #frm="ngForm" (ngSubmit)="onSubmit(frm)">
+    <p>
+      <label for="title">Title</label>
+      <input [(ngModel)]="title" type="text" id="title" name="title" #titleRef="ngModel" required minlength="3"/>
+      @if(titleRef.invalid && titleRef.touched){
+        <small style="color:rgb(226, 118, 118)">Title must be at least 3 characters</small>
+      }
+    </p>
+
+    <p>
+      <label for="summary">Summary</label>
+      <textarea [(ngModel)]="summary" id="summary" rows="5" name="summary" #summaryRef="ngModel" required minlength="5"></textarea>
+      @if(summaryRef.invalid && summaryRef.touched) {
+        <small style="color:rgb(226, 118, 118)">Summary must be at least 5 characters</small>
+      }
+    </p>
+
+    <p>
+      <label for="due-date">Due Date</label>
+      <input [(ngModel)]="due_date" type="date" id="due-date" name="due-date" #dateRef="ngModel" required/>
+      @if(dateRef.invalid && dateRef.touched) {
+        <small style="color:rgb(226, 118, 118)">Due date is required</small>
+      }
+    </p>
+
+    <p>
+      <label for="category">Category</label>
+      <select [(ngModel)]="category" name="category">
+          <option value="frontend">frontend</option>
+          <option value="backend">backend</option>
+          <option value="devops">devops</option>
+          <option value="marketing">marketing</option>
+      </select>
+    </p>
+    <p class="actions">
+      <button type="button" (click)="onClose()">Cancel</button>
+      <button type="submit" >Create</button>
+    </p>
+  </form>

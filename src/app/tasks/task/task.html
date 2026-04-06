@@ -1,0 +1,12 @@
+<article>
+    <div>
+        <h2>{{ task().title }}</h2>
+        <h4>{{ task().category }}</h4>
+    </div>
+    <time>{{ task().dueDate | date: 'medium' }}</time>
+    <p>{{ task().summary }}</p>
+    <p class="actions">
+        <button (click)="onComplete()">Complete</button>
+    </p>
+
+</article>

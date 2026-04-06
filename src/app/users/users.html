@@ -1,0 +1,77 @@
+<!-- shortcut to create a component is ng g c folder-name -->
+<!-- {{ }} this is called string interpolation which allows direct typescipt usage -->
+<!-- [src]="imagePath" this is called property binding which allows binds attribute by setting the DOM property to directly use ts funcs or values  -->
+
+<!-- 
+    attribute binding tells angular to bind the attributes dynamically by adding attr in front
+    like <div [attr.aria-val]="maxVal"
+    its use is rare as it allows custom attributes to be dynamically used and it binds the html attribute not the DOM
+-->
+
+<!-- event handling is done based like this in angular where event is written between () and its handler func is set a value of it -->
+
+<!-- local state management 
+ 
+    is handling or controlling on what specific things the button click depends now since previously on every re-render the user was automatically 
+    changed as the getUser() was called on every-render
+    now we assigned initally selected user to 0 index and then controlled the change only when click event occurs
+-->
+
+<!-- 
+    second way of state management is using signals they are objects that store values and angular keeps track of that whenever any change occurs 
+    angular only updates that part of UI
+-->
+
+
+
+
+
+
+<!-- <div>
+    <button (click)="onSelectedUser()">
+
+        <img [src]="imagePath" [alt]="selecteduser.name"/>
+        <span> {{ selecteduser.name }} </span>
+    </button>
+
+</div> -->
+
+
+<!-- Signal Way -->
+
+<!-- <div>
+    <button (click)="onSelectedUser()">
+
+        <img [src]="imagePath()" [alt]="selecteduser().name"/>
+        <span> {{ selecteduser().name }} </span>
+    </button>
+
+</div> -->
+
+
+
+<div>
+    <button id="user-btn" (click)="onSelectedUser()" [class.active]="selected()">
+        <img [src]="imagePath()" [alt]="user().name"/>
+        <span> {{ user().name }} </span>
+    </button>
+    <button id="del" (click)="onDeleteUserTrigger()">
+        <img [src]="deletePath" alt="delete" height="20px" width="20px"/>
+    </button>
+</div>
+
+<div>
+    @if(deleteUserTrigger)
+    {
+        <div class="backdrop" (click)="deleteUserTrigger=false"></div>
+        <div class="modal" (click)="$event.stopPropagation()">
+            <p>Are you sure you want to delete {{ user().name }}?</p>
+            <div>
+                <button (click)="onDeleteUser()">Yes</button>
+                <button (click)="deleteUserTrigger=false">No</button>    
+            </div>
+            
+        </div>
+    }
+</div>
+

@@ -1,0 +1,20 @@
+  <h2>New User</h2>
+  <form #frm="ngForm" (ngSubmit)="onSubmit(frm)">
+    <p>
+      <label for="title">Name</label>
+      <input [(ngModel)]="user" type="text" id="title" name="title" #nameRef="ngModel" required minlength="3"/>
+      @if(nameRef.invalid && nameRef.touched){
+        <small style="color:rgb(226, 118, 118)">Name must be at least 3 characters</small>
+      }
+    </p>
+
+    <p>
+      <label for="image">Choose Profile Pic</label>
+      <input type="file" accept="image/png, image/jpeg, image/jpg, .html" (change)="onFileSelect($event)" required />
+    </p>
+
+    <p class="actions">
+      <button type="button" (click)="onCancel()">Cancel</button>
+      <button type="submit">Create</button>
+    </p>
+  </form>

@@ -1,0 +1,34 @@
+/* You can add global styles to this file, and also import other style files */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: radial-gradient(circle at top left, #6b6e72, #0e0e10);
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.success-snackbar {
+  background: #568357;
+  color: rgb(192, 190, 190);
+  border-radius: 0.5rem;
+}
+
+.error-snackbar {
+  background: #cf726c;
+  color: rgb(192, 190, 190);
+  border-radius: 0.5rem;
+}
+
+.info-snackbar {
+  background: #7798b4;
+  color: rgb(192, 190, 190);
+  border-radius: 0.5rem;
+}

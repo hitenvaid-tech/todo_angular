@@ -1,0 +1,56 @@
+<router-outlet />  
+
+<app-header />
+
+<div id="useraddsearch">
+    <button (click)="addNewUser()">Add New User</button>
+    @if(addnewuser)
+    {
+      <div class="backdrop" (click)="onClose()"></div>
+      <div class="modal" (click)="$event.stopPropagation()">
+          <app-new-user (close)="onClose()" />
+      </div>
+    }
+
+    <input 
+        type="text" 
+        placeholder="Search User"
+        name="search"
+        [(ngModel)]="searchedUser"
+    />
+     <!-- (ngModelChange)="onSearch()" -->
+</div>
+<main>
+  <ul id="users">
+    @for(user of filteredUsers; track user.id)
+    {
+      <li>
+        <app-users 
+          [user]="user"
+          (selectedUser)="onSelectUser($event)"
+          [selected]="user.id===selectedUserId"
+          (selectedUserAfterDelete)="onCheckSelectedUserAfterDelete($event)"
+        />
+      </li>
+    }
+  </ul>
+
+  <!-- conditional rendering -->
+   @if(users.length===0)
+   {
+    <p id="fallback">No users found. Please add a user.</p>
+   }
+   @else {
+
+   @if(getselectedUserId)
+   {
+    <div id="tasks">
+      <app-tasks [name]="getselectedUserId.name" [id]="getselectedUserId.id"/>
+    </div>
+    }
+    @else {
+      <p id="fallback">Select a user to see their tasks</p>
+    }
+  }
+</main>
+
