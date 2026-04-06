@@ -15,7 +15,7 @@ Once the server is running, open your browser and navigate to `http://localhost:
 ## Project structure
 
 Each component has its separate folder inside the app which is being imported and then used with help of selectors declared in component decorators
-
+<br>
 This project also uses model services which uses the concept of dependency injection to inject services from the model which can be used in multiple files.
 
 ## Features
