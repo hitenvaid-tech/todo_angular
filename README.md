@@ -19,10 +19,11 @@ Each component has its separate folder inside the app which is being imported an
 This project also uses model services which uses the concept of dependency injection to inject services from the model which can be used in multiple files.
 
 ## Features
-
-Modular
-Component Separated
-Services Usage with dependency injection
-Uses Snackbar for toast notifications
-Implements complex search feature for tasks and users
-Filters tasks based on their category
+<ul>
+<li>Modular</li>
+<li>Component Separated</li>
+<li>Services Usage with dependency injection</li>
+<li>Uses Snackbar for toast notifications</li>
+<li>Implements complex search feature for tasks and users</li>
+<li>Filters tasks based on their category</li>
+</ul>
