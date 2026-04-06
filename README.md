@@ -1,6 +1,6 @@
 # AngularPrc
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.5.
+This project is a basic angular todo app with complex features implementing concepts like signals, decorators, parent-child communication and data input/output, directives like ngModel with 2 way binding, string interpolation, pipes and much more.
 
 ## Development server
 
@@ -12,48 +12,17 @@ ng serve
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+## Project structure
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Each component has its separate folder inside the app which is being imported and then used with help of selectors declared in component decorators
 
-```bash
-ng generate component component-name
-```
+This project also uses model services which uses the concept of dependency injection to inject services from the model which can be used in multiple files.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Features
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Modular
+Component Separated
+Services Usage with dependency injection
+Uses Snackbar for toast notifications
+Implements complex search feature for tasks and users
+Filters tasks based on their category
