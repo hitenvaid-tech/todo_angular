@@ -1,4 +1,4 @@
-import { Component, signal, inject } from '@angular/core';
+import { Component, signal, inject, computed } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header/header';
 import { UserComponent } from './users/users';
@@ -6,6 +6,7 @@ import { TasksComponent } from './tasks/tasks';
 import { FormsModule } from '@angular/forms';
 import { UserService } from './users/users.service';
 import { NewUser } from './users/new-user/new-user';
+
 // this is a decorator which provides metadata telling the markup is shown in templateUrl while the style is taken from styleUrl
 @Component({
   selector: 'app-root',
@@ -19,42 +20,50 @@ export class App {
 
   private userService=inject(UserService);
   
-  get users()
-  {
-    return this.userService.getAllUsers();
-  }
+  users=this.userService.getAllUsers();
 
-  // selectedUserId='u1';
-  selectedUserId?:string;  // here instead of selecting any dummy user we are just not selecting any user
-  searchedUser='';
+  selectedUserId=signal<string|undefined>(undefined);
+  searchedUser=signal('');
+  addnewuser=signal(false);
 
-  addnewuser=false;
-  get getselectedUserId()
-  {
-    return this.users.find((i)=> i.id===this.selectedUserId);
-  }
+  selectedUser=computed(() => this.users().find((i) => i.id === this.selectedUserId()));
+  // get getselectedUserId()
+  // {
+  //   return this.users().find((i)=> i.id===this.selectedUserId());
+  // }
   onSelectUser(id: string)
   {
-    this.selectedUserId=id;
+    this.selectedUserId.set(id);
   }
   addNewUser()
   {
-    this.addnewuser=true;
+    this.addnewuser.set(true);
   }
 
   onClose()
   {
-    this.addnewuser=false;
+    this.addnewuser.set(false);
   }
 
-  get filteredUsers()
-  {
-    return this.userService.getSearchedUsers(this.searchedUser);
-  }
+  filteredUsers=computed(()=>{
+    return this.users().filter((user) => {
+
+      const search = this.searchedUser().toLowerCase();
+
+      const matchesSearch = !search || user.name.toLowerCase().includes(search)
+
+      return matchesSearch;
+  });
+  })
+  // get filteredUsers()
+  // {
+  //   return this.userService.getSearchedUsers(this.searchedUser());
+  // }
+
   onCheckSelectedUserAfterDelete(id: string)
   {
-    if(this.selectedUserId===id)    {
-      this.selectedUserId=undefined;
+    if(this.selectedUserId()===id)    {
+      this.selectedUserId.set(undefined);
     }
   }
 }

@@ -4,7 +4,7 @@
 
 <div id="useraddsearch">
     <button (click)="addNewUser()">Add New User</button>
-    @if(addnewuser)
+    @if(addnewuser())
     {
       <div class="backdrop" (click)="onClose()"></div>
       <div class="modal" (click)="$event.stopPropagation()">
@@ -16,19 +16,20 @@
         type="text" 
         placeholder="Search User"
         name="search"
-        [(ngModel)]="searchedUser"
+        [ngModel]="searchedUser()"
+        (ngModelChange)="searchedUser.set($event)"
     />
-     <!-- (ngModelChange)="onSearch()" -->
+
 </div>
 <main>
   <ul id="users">
-    @for(user of filteredUsers; track user.id)
+    @for(user of filteredUsers(); track user.id)
     {
       <li>
         <app-users 
           [user]="user"
           (selectedUser)="onSelectUser($event)"
-          [selected]="user.id===selectedUserId"
+          [selected]="user.id===selectedUserId()"
           (selectedUserAfterDelete)="onCheckSelectedUserAfterDelete($event)"
         />
       </li>
@@ -36,19 +37,22 @@
   </ul>
 
   <!-- conditional rendering -->
-   @if(users.length===0)
+   @if(users().length===0)
    {
     <p id="fallback">No users found. Please add a user.</p>
    }
-   @else {
-
-   @if(getselectedUserId)
+   @else 
    {
-    <div id="tasks">
-      <app-tasks [name]="getselectedUserId.name" [id]="getselectedUserId.id"/>
-    </div>
+  
+    @let user=selectedUser();
+    @if(user)
+    {
+      <div id="tasks">
+        <app-tasks [name]="user.name" [id]="user.id"/>
+      </div>
     }
-    @else {
+    @else 
+    {
       <p id="fallback">Select a user to see their tasks</p>
     }
   }

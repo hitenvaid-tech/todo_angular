@@ -44,6 +44,11 @@ button[type="button"]:active {
   background-color: #635e84;
 }
 
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 button[type="submit"] {
   background-color: #22224f;
   color:rgb(155, 160, 165);
@@ -51,8 +56,8 @@ button[type="submit"] {
   transition: all 0.3s ease;
 }
 
-button[type="submit"]:hover,
-button[type="submit"]:active {
+button[type="submit"]:not(:disabled):hover,
+button[type="submit"]:not(:disabled):active {
   background-color: #7e889c;
   color:rgb(37, 38, 49);
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);

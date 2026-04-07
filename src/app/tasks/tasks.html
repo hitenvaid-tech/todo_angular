@@ -1,10 +1,10 @@
+<!--  
 <section id="tasks">
     @if(isAddingTask)
     {
         <div class="backdrop" (click)="onClose()"></div>
 
         <div class="modal" (click)="$event.stopPropagation()">
-            <!-- <app-new-task (close)="onClose()" (addTask)="onSubmit($event)" [userId]="id()" /> -->
             <app-new-task (close)="onClose()" [userId]="id()" />
         </div>
     }
@@ -13,7 +13,7 @@
         <menu>
             <div>
                 <span>Filter by Category</span>
-                <select [(ngModel)]="filter"  name="filter">
+                <select [(ngModel)]="filter"  name="filter" >
                     <option value="">All</option>
                     <option value="frontend">frontend</option>
                     <option value="backend">backend</option>
@@ -30,6 +30,12 @@
                     name="search"
                 />
             </div>
+            <div>
+                <span>Based on Date</span>
+                <button (click)="isAscending = !isAscending">
+                   {{ isAscending ? '↑ Oldest' : '↓ Newest' }}
+                </button>
+            </div>
             <button (click)="onAdd()">Add Task</button>
         </menu>
     </header>
@@ -40,7 +46,6 @@
                 @for(task of selectedUserTasks; track task.id)
                 {
                     <li>
-                        <!-- <app-task [task]="task" (completed)="onTaskComplete($event)"/> -->
                          <app-task [task]="task" />
                     </li>
                 }
@@ -50,4 +55,72 @@
             }
         </ul>
     </div>
+</section>
+
+-->
+
+
+<section id="tasks">
+  @if (isAddingTask()) 
+  {
+    <div class="backdrop" (click)="onClose()"></div>
+
+    <div class="modal" (click)="$event.stopPropagation()">
+      <app-new-task (close)="onClose()" [userId]="id()" />
+    </div>
+  }
+
+  <header>
+    <h2>{{ name() }}'s tasks</h2>
+
+    <menu>
+
+      <div>
+        <span>Filter by Category</span>
+        <select
+          [ngModel]="filter()"
+          (ngModelChange)="filter.set($event)"
+        >
+          <option value="">All</option>
+          <option value="frontend">frontend</option>
+          <option value="backend">backend</option>
+          <option value="devops">devops</option>
+          <option value="marketing">marketing</option>
+        </select>
+      </div>
+
+
+      <div>
+        <span>Search Tasks</span>
+        <input
+          type="text"
+          [ngModel]="searchTerm()"
+          (ngModelChange)="searchTerm.set($event)"
+          placeholder="Search tasks"
+        />
+      </div>
+
+
+      <div>
+        <span>Based on Date</span>
+        <button (click)="toggleSort()">
+          {{ isAscending() ? '↑ Oldest' : '↓ Newest' }}
+        </button>
+      </div>
+
+      <button (click)="onAdd()">Add Task</button>
+    </menu>
+  </header>
+
+  <ul>
+    @if (selectedUserTasks().length > 0) {
+      @for (task of selectedUserTasks(); track task.id) {
+        <li>
+          <app-task [task]="task" />
+        </li>
+      }
+    } @else {
+      <p>No Tasks Available</p>
+    }
+  </ul>
 </section>

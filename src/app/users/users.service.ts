@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
 import { User } from "../interfaces/user.model";
+import { signal, effect } from "@angular/core";
 @Injectable({providedIn: 'root'})
 export class UserService
 {
-    private users=[
+    private users=signal<User[]>([
         {
             id: 'u1',
             name: 'jasmin',
@@ -34,50 +35,53 @@ export class UserService
             name: 'arjan',
             avatar: 'user-6.jpg',
         }
-    ];
-
-
+    ]);
 
     constructor()
     {
         const users=localStorage.getItem('users');
         if(users)
         {
-            this.users=JSON.parse(users);
+            this.users.set(JSON.parse(users));
         }
+        effect(() => {
+            localStorage.setItem('users', JSON.stringify(this.users()));
+        });
     }
     getAllUsers()
     {
-        return this.users;
+        return this.users.asReadonly();
     }
 
     adddNewUser(newUser: User)
     {
-        this.users.push(newUser);
-        this.saveUsers();
+        this.users.update((users) => [...users, newUser]);
+        // this.users.push(newUser);
+        // this.saveUsers();
     }
 
-    private saveUsers()
-    {
-        localStorage.setItem('users',JSON.stringify(this.users));
-    }
+    // private saveUsers()
+    // {
+    //     localStorage.setItem('users',JSON.stringify(this.users));
+    // }
 
-    getSearchedUsers(searchTerm:string)
-    {
-        return this.users.filter((user) => {
+    // getSearchedUsers(searchTerm:string)
+    // {
+    //     return this.users().filter((user) => {
 
-            const search = searchTerm.toLowerCase();
+    //         const search = searchTerm.toLowerCase();
 
-            const matchesSearch = !search || user.name.toLowerCase().includes(search)
+    //         const matchesSearch = !search || user.name.toLowerCase().includes(search)
 
-            return matchesSearch;
-        });
-    }
+    //         return matchesSearch;
+    //     });
+    // }
 
     deleteUser(userId:string)
     {
-        this.users = this.users.filter((user) => user.id !== userId);
-        this.saveUsers();
+        this.users.update((users) => users.filter((user) => user.id !== userId));
+        // this.users = this.users.filter((user) => user.id !== userId);
+        // this.saveUsers();
     }
 
 }

@@ -15,20 +15,32 @@ body {
   height: 100%;
 }
 
-.success-snackbar {
-  background: #568357;
-  color: rgb(192, 190, 190);
-  border-radius: 0.5rem;
+.success-snackbar .mdc-snackbar__surface{
+  background: #314f31 !important;
+  color: rgb(150, 197, 133) !important;
+  border-radius: 0.5rem !important;
 }
 
-.error-snackbar {
-  background: #cf726c;
-  color: rgb(192, 190, 190);
-  border-radius: 0.5rem;
+.error-snackbar .mdc-snackbar__surface{
+  background: #5b1d19 !important;
+  color: rgb(187, 135, 135) !important;
+  border-radius: 0.5rem !important;
 }
 
-.info-snackbar {
-  background: #7798b4;
-  color: rgb(192, 190, 190);
-  border-radius: 0.5rem;
+.info-snackbar .mdc-snackbar__surface {
+  background: #292e4a !important;
+  color: rgb(153, 162, 190) !important;
+  border-radius: 0.5rem !important;
+}
+
+.success-snackbar .mat-mdc-snack-bar-action .mdc-button__label {
+  color: #a5d6a7 !important;
+}
+
+.error-snackbar .mat-mdc-snack-bar-action .mdc-button__label {
+  color: #ef9a9a !important;
+}
+
+.info-snackbar .mat-mdc-snack-bar-action .mdc-button__label {
+  color: #9fa8da !important;
 }
