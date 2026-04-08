@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Task } from "../interfaces/task.model";
-import { signal, effect } from "@angular/core";
+import { signal, effect, computed } from "@angular/core";
 @Injectable({providedIn: 'root'})
 
 /*
@@ -180,8 +180,21 @@ export class TaskService
     });
   }
 
-  // expose readonly signal
+
   getTasks = this.tasks.asReadonly();
+
+  tasksByUser=computed(()=>{
+    const map = new Map<string, Task[]>();
+
+    for (const task of this.tasks()) {
+      if (!map.has(task.userId)) {
+        map.set(task.userId, []);
+      }
+      map.get(task.userId)!.push(task);
+    }
+
+    return map;
+  })
 
   addTask(task: Task) {
     this.tasks.update((prev) => [...prev, task]);

@@ -6,7 +6,8 @@ import { TasksComponent } from './tasks/tasks';
 import { FormsModule } from '@angular/forms';
 import { UserService } from './users/users.service';
 import { NewUser } from './users/new-user/new-user';
-
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 // this is a decorator which provides metadata telling the markup is shown in templateUrl while the style is taken from styleUrl
 @Component({
   selector: 'app-root',
@@ -26,11 +27,22 @@ export class App {
   searchedUser=signal('');
   addnewuser=signal(false);
 
-  selectedUser=computed(() => this.users().find((i) => i.id === this.selectedUserId()));
-  // get getselectedUserId()
-  // {
-  //   return this.users().find((i)=> i.id===this.selectedUserId());
-  // }
+
+
+  searchedUsert$= toObservable(this.searchedUser).pipe(
+    debounceTime(300),
+    distinctUntilChanged()
+  );
+
+  debouncedSearchUser=toSignal(this.searchedUsert$, {initialValue: ''});
+
+  selectedUser=computed(()=>{
+    const id=this.selectedUserId();
+    return id ? this.userService.usersMap().get(id) : undefined;
+  })
+  
+
+
   onSelectUser(id: string)
   {
     this.selectedUserId.set(id);
@@ -48,12 +60,12 @@ export class App {
   filteredUsers=computed(()=>{
     return this.users().filter((user) => {
 
-      const search = this.searchedUser().toLowerCase();
+      const search = this.debouncedSearchUser().toLowerCase();
 
       const matchesSearch = !search || user.name.toLowerCase().includes(search)
 
       return matchesSearch;
-  });
+    });
   })
   // get filteredUsers()
   // {

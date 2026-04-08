@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { User } from "../interfaces/user.model";
-import { signal, effect } from "@angular/core";
+import { signal, effect, computed } from "@angular/core";
 @Injectable({providedIn: 'root'})
 export class UserService
 {
@@ -36,6 +36,16 @@ export class UserService
             avatar: 'user-6.jpg',
         }
     ]);
+
+
+    usersMap = computed(() => {
+        const map = new Map<string, User>();
+
+        this.users().forEach(u => map.set(u.id, u));
+
+        return map; 
+    });
+
 
     constructor()
     {
